@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.includes(:tags)
+    @items = @items.where("title LIKE ?", "%#{params[:title]}%")
 
     @items = @items.tagged_with(params[:tag]) if params[:tag].present?
     @items = @items.sellered_by(params[:seller]) if params[:seller].present?
